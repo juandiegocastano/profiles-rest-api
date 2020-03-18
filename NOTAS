@@ -177,4 +177,21 @@ class UserProfileManager(BaseUserManager):
 Para decirle a Django que utilice el modelo custom que se acaba de crear en vez de el default -->
 En profiles_project/settings se agrega-->
 
-AUTH_USER_MODELS = 'profiles_api.UserProfile'
+AUTH_USER_MODEL = 'profiles_api.UserProfile'
+
+Para hacer los pasos necesarios para hacer las migraciones-->
+python manage.py makemigrations profiles_api
+
+Para realmente hacer las migraciones-->
+python manage.py migrate
+
+
+Creando superusuarios--->
+python manage.py createsuperuser
+
+We can enable the django admin to use our user profile by-->
+En profiles_api/admin-->
+
+from profiles_api import models
+
+admin.site.register(models.UserProfile)

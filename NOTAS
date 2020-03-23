@@ -260,7 +260,7 @@ class HelloSerializer(serializers.Serializer):
     name = serializers.CharField(max_length= 10)
 
 
-Se añade el metodo post a los views usando el serializer
+Se añade el metodo POST, PUT, PATCH, and DELETE a los views usando el serializer
 Se debe agregar el serializer a la variable serializer_class, si es otra no funciona.
 En profiles_api/views.py -->
 
@@ -300,3 +300,36 @@ class HelloApiView(APIView):
                 serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
             )
+    def put(self, request, pk=None):
+        """Handle updating an object, pk=primary key"""
+        return Response({'method': 'PUT'})
+
+    def patch(self, request, pk=None):
+        """Handle a partial update of an object"""
+        return Response({'method': 'PATCH'})
+
+    def delete(self, request, pk=None):
+        """Deleting an object"""
+        return Response({'method': 'DELETE'})
+
+
+
+VIEWSETS-->
+En vez de especificar los metodos se usa viewsets para manejar los metodos HTTP mas comunes
+Cuando usar?
+-Cuando quiero hacer un CRUD comun a DB
+-Quick and simple API
+
+class HelloViewSet(viewsets.ViewSet):
+    """ Test API ViewSet"""
+    serializer_class = serializer.HelloSerializer
+
+    def list(self, request):
+        """Return a Hello message"""
+        a_viewset = [
+            'Uses actions (list, create, retrieve, update, partial_update)',
+            'Automatically maps to URLS using Routers',
+            'Provides mode functionality with less code'
+        ]
+
+        return Response({ 'message': 'Holaa', 'a_viewset': a_viewset })
